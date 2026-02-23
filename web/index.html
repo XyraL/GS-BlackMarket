@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>GS BlackMarket</title>
+  <link rel="stylesheet" href="./style.css"/>
+  <style>#root.hidden{display:none!important}</style>
+</head>
+<body>
+  <div id="root" class="hidden">
+    
+    <div class="bg">
+      <div class="bgGrid"></div>
+      <div class="bgGlow"></div>
+      <div class="bgNoise"></div>
+    </div>
+
+    <div class="app" id="tablet">
+      
+      <header class="topbar">
+        <div class="brand">
+          <div class="brandMark">GS</div>
+          <div class="brandText">
+            <div class="brandName">BLACKMARKET</div>
+            <div class="brandSub">secure commerce terminal</div>
+          </div>
+
+          
+          <div class="crumbs" id="crumbs" aria-hidden="true">
+            <span class="crumb" id="crumbVendor">All Vendors</span>
+            <span class="crumb" id="crumbCat">All</span>
+          </div>
+        </div>
+
+        <nav class="tabs" aria-label="Primary">
+          <button class="navBtn active" data-view="home" type="button">
+            <span class="tabIco">⌂</span><span>Home</span>
+          </button>
+          <button class="navBtn" data-view="shop" type="button">
+            <span class="tabIco">⧉</span><span>Shop</span>
+          </button>
+          <button class="navBtn" data-view="orders" type="button">
+            <span class="tabIco">⟐</span><span>Orders</span>
+          </button>
+          <button class="navBtn" data-view="profile" type="button">
+            <span class="tabIco">⌬</span><span>Profile</span>
+          </button>
+        </nav>
+
+        
+        <div class="session">
+          <div class="sessionName" id="aliasName">Not logged in</div>
+          <div class="sessionHint" id="aliasHint">Create an account to receive drops.</div>
+        </div>
+
+        <div class="topActions">
+          <button class="pill" id="themeBtn" type="button" title="Theme"><span class="ico">◈</span><span>Theme</span></button>
+          <button class="pill danger" id="closeBtn" type="button" title="Close"><span class="ico">✕</span><span>Close</span></button>
+        </div>
+      </header>
+
+      
+      <main class="content">
+        
+        <div class="overlay" id="authOverlay">
+          <div class="authWrap">
+            <div class="authCard">
+              <div class="authHeader">
+                <div class="authKicker">ACCESS</div>
+                <div class="authTitle">IDENTITY VERIFICATION</div>
+                <div class="authSub">Log in or create a burner alias. No alias, no dispatch.</div>
+              </div>
+
+              <div class="authTabs">
+                <button class="authTab active" data-auth="login" type="button">Login</button>
+                <button class="authTab" data-auth="create" type="button">Create</button>
+              </div>
+
+              <div class="authBody">
+                <div class="field">
+                  <label>Username</label>
+                  <input id="authUser" placeholder="shadow_handle" autocomplete="off"/>
+                </div>
+
+                <div class="field">
+                  <label>Password</label>
+                  <input id="authPass" type="password" placeholder="••••••••" autocomplete="off"/>
+                </div>
+
+                <div class="field" id="createAliasField">
+                  <label>Alias</label>
+                  <input id="authAlias" placeholder="NeonCourier" autocomplete="off"/>
+                </div>
+
+                <div class="authActions">
+                  <button class="btn primary" id="authSubmit" type="button">Enter</button>
+                  <button class="btn ghost" id="authSkip" type="button">Preview</button>
+                </div>
+
+                <div class="authMsg" id="authMsg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <section class="views">
+          
+          <div class="view active" id="view-home">
+            <div class="homeGrid">
+              <section class="homeHero" id="hero">
+                <div class="heroRail">
+                  <div class="heroBadge">
+                    <span class="dot"></span>
+                    <span>SECURE CHANNEL</span>
+                  </div>
+                  <div class="heroHeadline">Your alias. Your rules. Your route.</div>
+                  <div class="heroCopy">
+                    Browse the market, stage a cart, dispatch a courier, collect from a dead drop.
+                    Keep it quiet.
+                  </div>
+
+                  <div class="heroCTA">
+                    <button class="btn primary" id="homeToShop" type="button">Open Shop</button>
+                    <button class="btn ghost" id="homeToOrders" type="button">View Orders</button>
+                  </div>
+
+                  <div class="heroDots" id="heroDots" aria-label="Hero carousel"></div>
+                </div>
+
+                <div class="heroSlides">
+                  <div class="heroSlide active">
+                    <div class="heroCard">
+                      <div class="hcTop">
+                        <div class="hcTitle">Quick Intel</div>
+                        <div class="hcTag">LIVE</div>
+                      </div>
+                      <div class="hcBody">
+                        <div class="kpiRow">
+                          <div class="kpi">
+                            <div class="k">Alias</div>
+                            <div class="v" id="homeAlias">@—</div>
+                          </div>
+                          <div class="kpi">
+                            <div class="k">Cart</div>
+                            <div class="v" id="homeCartCount">0 items</div>
+                          </div>
+                          <div class="kpi">
+                            <div class="k">Active Orders</div>
+                            <div class="v" id="homeOrdersCount">0</div>
+                          </div>
+                        </div>
+                        <div class="miniNote" id="homeNote">Log in to dispatch real deliveries.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="heroSlide">
+                    <div class="heroCard">
+                      <div class="hcTop">
+                        <div class="hcTitle">Delivery Rules</div>
+                        <div class="hcTag">INFO</div>
+                      </div>
+                      <div class="hcBody">
+                        <div class="list">
+                          <div class="li"><span class="dot"></span><span>Dead drops are randomized per dispatch.</span></div>
+                          <div class="li"><span class="dot"></span><span>Use <b>Ping Area</b> to tighten the hint.</span></div>
+                          <div class="li"><span class="dot"></span><span>Cancel unclaimed orders for a refund.</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="heroSlide">
+                    <div class="heroCard">
+                      <div class="hcTop">
+                        <div class="hcTitle">Noise Discipline</div>
+                        <div class="hcTag">SAFE</div>
+                      </div>
+                      <div class="hcBody">
+                        <div class="list">
+                          <div class="li"><span class="dot"></span><span>Keep payments consistent.</span></div>
+                          <div class="li"><span class="dot"></span><span>Avoid repeat pings in the same block.</span></div>
+                          <div class="li"><span class="dot"></span><span>Rotate vendors, rotate routes.</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="heroNav heroPrev" id="heroPrev" type="button" aria-label="Previous">‹</button>
+                  <button class="heroNav heroNext" id="heroNext" type="button" aria-label="Next">›</button>
+                </div>
+              </section>
+
+              <section class="homePanel">
+                <div class="panelCard">
+                  <div class="panelHead">
+                    <div>
+                      <div class="panelTitle">Recent Orders</div>
+                      <div class="panelSub">Last 20 active orders (auto-refresh on view).</div>
+                    </div>
+                    <button class="btn ghost tiny" id="homeRefreshOrders" type="button">Refresh</button>
+                  </div>
+                  <div class="panelBody">
+                    <div class="ordersMini" id="homeOrdersMini"></div>
+                  </div>
+                </div>
+
+                <div class="panelCard">
+                  <div class="panelHead">
+                    <div>
+                      <div class="panelTitle">Quick Actions</div>
+                      <div class="panelSub">Shortcuts for fast dispatch.</div>
+                    </div>
+                  </div>
+                  <div class="panelBody">
+                    <div class="qaGrid">
+                      <button class="qa" id="qaTools" type="button"><span class="qai">🧰</span><span>Tools</span></button>
+                      <button class="qa" id="qaWeapons" type="button"><span class="qai">🔫</span><span>Weapons</span></button>
+                      <button class="qa" id="qaAmmo" type="button"><span class="qai">🧨</span><span>Ammo</span></button>
+                      <button class="qa" id="qaCheckout" type="button"><span class="qai">⟠</span><span>Checkout</span></button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          
+          <div class="view" id="view-shop">
+            <div class="pageHead">
+              <div>
+                <div class="pageTitle">Shop</div>
+                <div class="pageSub">Browse inventory. Filter. Stage a cart.</div>
+              </div>
+              <div class="headRight">
+                <div class="pillMini" id="shopAlias">@—</div>
+                <button class="btn primary" id="shopToOrders" type="button">Cart • 0</button>
+              </div>
+            </div>
+
+            <div class="filters">
+              <div class="fGroup">
+                <label>Search</label>
+                <input id="searchInput" placeholder="name, category…"/>
+              </div>
+              <div class="fGroup">
+                <label>Sort</label>
+                <select id="sortSel">
+                  <option value="featured">Featured</option>
+                  <option value="priceAsc">Price (Low)</option>
+                  <option value="priceDesc">Price (High)</option>
+                  <option value="nameAsc">Name (A-Z)</option>
+                </select>
+              </div>
+<div class="fGroup range">
+                <label>Max Price <span id="priceVal" class="muted">$0</span></label>
+                <input id="priceRange" type="range" min="0" max="1000000" value="1000000"/>
+              </div>
+            </div>
+
+            <div class="catWrap">
+              <div class="chipRow" id="categoryTiles"></div>
+              <div class="subchipRow" id="weaponSubRow"></div>
+            </div>
+
+            <div class="shopGrid">
+              <div class="productGrid" id="productGrid"></div>
+              <div class="pager" id="pager">
+                <div class="pagerLeft">
+                  <button class="pageBtn" id="pagePrev" type="button">Prev</button>
+                  <button class="pageBtn" id="pageNext" type="button">Next</button>
+                  <div class="pageInfo" id="pageInfo">Page 1 of 1</div>
+                </div>
+                <div class="pagerNums" id="pageNums"></div>
+              </div>
+            </div>
+          </div>
+
+                    
+          <div class="view" id="view-orders">
+            <div class="pageHead">
+              <div>
+                <div class="pageTitle">Orders</div>
+                <div class="pageSub">Track dispatch, ping area, cancel & refund.</div>
+              </div>
+              <div class="headRight">
+                <button class="btn ghost" id="mockNewOrder" type="button">Mock: New Order</button>
+              </div>
+            </div>
+
+            <div class="ordersLayout">
+              <section class="ordersLeft">
+                <div class="panelCard">
+                  <div class="panelHead">
+                    <div>
+                      <div class="panelTitle">Active Orders</div>
+                      <div class="panelSub">Select one to view intel.</div>
+                    </div>
+                  </div>
+                  <div class="panelBody pad0">
+                    <div class="ordersList" id="ordersList"></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="ordersMid" id="orderDetail">
+                <div class="panelCard">
+                  <div class="detailTop">
+                    <div>
+                      <div class="detailTitle" id="odTitle">Select an order</div>
+                      <div class="detailSub" id="odSub">Pick an order to view intel.</div>
+                    </div>
+                    <div class="detailActions">
+                      <span class="badge" id="odBadge">—</span>
+                      <button class="btn primary" id="odPing" type="button">Ping Area</button>
+                      <button class="btn danger" id="odCancel" type="button" style="display:none;">Cancel + Refund</button>
+                      <button class="btn ghost" id="odCopy" type="button">Copy Code</button>
+                    </div>
+                  </div>
+
+                  <div class="detailBody">
+                    <div class="intelCard">
+                      <div class="mapPreview" id="mapPreview"></div>
+                      <div class="intelHead">
+                        <div>
+                          <div class="t">Dispatch Zone</div>
+                          <div class="s">Use Ping Area for a more precise hint.</div>
+                        </div>
+                      </div>
+                      <div class="intelBody" id="odHint">No active order selected.</div>
+                    </div>
+
+                    <div class="intelCols">
+                      <div class="intelCard flex">
+                        <div class="intelHead">
+                          <div>
+                            <div class="t">Timeline</div>
+                            <div class="s">Courier updates</div>
+                          </div>
+                        </div>
+                        <div class="intelBody">
+                          <div class="timeline" id="timeline"></div>
+                        </div>
+                      </div>
+                      <div class="intelCard">
+                        <div class="intelHead">
+                          <div>
+                            <div class="t">Contents</div>
+                            <div class="s">Items in this order</div>
+                          </div>
+                        </div>
+                        <div class="intelBody" id="odItems">—</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="ordersRight">
+                <div class="panelCard">
+                  <div class="panelHead">
+                    <div>
+                      <div class="panelTitle">Cart</div>
+                      <div class="panelSub">Review totals and dispatch.</div>
+                    </div>
+                    <button class="btn ghost tiny" id="clearCart2" type="button">Clear</button>
+                  </div>
+                  <div class="panelBody">
+                    <div class="cartMirror" id="cartMirror"></div>
+                    <div class="cartTotals">
+                      <div class="line"><span>Subtotal</span><span id="tSubtotal2">$0</span></div>
+                      <div class="line"><span>Delivery</span><span id="tDelivery2">$0</span></div>
+                      <div class="line total"><span>Total</span><span id="tTotal2">$0</span></div>
+                      <div class="payRow">
+                        <select id="paySel2" class="select">
+                          <option value="cash">Cash</option>
+                          <option value="bank">Bank</option>
+                        </select>
+                        <button class="btn primary" id="checkoutBtn2" type="button">Checkout</button>
+                      </div>
+                      <div class="hint" id="cartHint2">Login required.</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          
+          <div class="view" id="view-profile">
+            <div class="pageHead">
+              <div>
+                <div class="pageTitle">Profile</div>
+                <div class="pageSub">Account, security, UI preferences.</div>
+              </div>
+            </div>
+
+            <div class="profileGrid">
+              <div class="panelCard">
+                <div class="panelHead">
+                  <div>
+                    <div class="panelTitle">Account</div>
+                    <div class="panelSub">Alias + session tools.</div>
+                  </div>
+                </div>
+                <div class="panelBody">
+                  <div class="kv"><span>Alias</span><span id="profileAlias">@—</span></div>
+                  <div class="kv"><span>Username</span><span id="profileUser">—</span></div>
+
+                  <div class="split">
+                    <div class="field">
+                      <label>New Alias</label>
+                      <input id="newAlias" placeholder="NovaRunner"/>
+                    </div>
+                    <div class="field">
+                      <label>&nbsp;</label>
+                      <button class="btn ghost" id="saveAlias" type="button">Update Alias</button>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <button class="btn danger" id="logoutBtn" type="button">Log out</button>
+                  </div>
+                  <div class="miniNote" id="profileMsg"></div>
+                </div>
+              </div>
+
+              <div class="panelCard">
+                <div class="panelHead">
+                  <div>
+                    <div class="panelTitle">Security</div>
+                    <div class="panelSub">Change password (server-side).</div>
+                  </div>
+                </div>
+                <div class="panelBody">
+                  <div class="field">
+                    <label>Current Password</label>
+                    <input id="pwCurrent" type="password" placeholder="••••••••"/>
+                  </div>
+                  <div class="split">
+                    <div class="field">
+                      <label>New Password</label>
+                      <input id="pwNew" type="password" placeholder="••••••••"/>
+                    </div>
+                    <div class="field">
+                      <label>Confirm</label>
+                      <input id="pwNew2" type="password" placeholder="••••••••"/>
+                    </div>
+                  </div>
+                  <button class="btn primary" id="changePass" type="button">Change Password</button>
+                  <div class="miniNote" id="securityMsg"></div>
+                </div>
+              </div>
+
+              <div class="panelCard">
+                <div class="panelHead">
+                  <div>
+                    <div class="panelTitle">UI</div>
+                    <div class="panelSub">Local effects (per-client).</div>
+                  </div>
+                </div>
+                <div class="panelBody">
+                  <label class="toggle"><input type="checkbox" checked id="tglGlow"/> <span>Glow</span></label>
+                  <label class="toggle"><input type="checkbox" checked id="tglMotion"/> <span>Motion</span></label>
+                  <label class="toggle"><input type="checkbox" checked id="tglNoise"/> <span>Noise</span></label>
+                </div>
+              </div>
+
+              <div class="panelCard">
+                <div class="panelHead">
+                  <div>
+                    <div class="panelTitle">Themes</div>
+                    <div class="panelSub">Client-side palette swap.</div>
+                  </div>
+                </div>
+                <div class="panelBody">
+                  <div class="swatches">
+                    <button class="themeSwatch" data-theme="neon" type="button">Neon</button>
+                    <button class="themeSwatch" data-theme="ember" type="button">Ember</button>
+                    <button class="themeSwatch" data-theme="toxic" type="button">Toxic</button>
+                    <button class="themeSwatch" data-theme="royal" type="button">Royal</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      
+      <div class="modal hidden" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout">
+        <div class="modalBackdrop" data-act="close"></div>
+        <div class="modalCard">
+          <div class="modalHead">
+            <div>
+              <div class="modalTitle">Checkout</div>
+              <div class="modalSub">Confirm totals before dispatch.</div>
+            </div>
+            <button class="pill danger" id="checkoutClose" type="button"><span class="ico">✕</span><span>Close</span></button>
+          </div>
+
+          <div class="modalBody">
+            <div class="summaryCols">
+              <div class="sumCard">
+                <div class="sumTitle">Items</div>
+                <div class="sumList" id="checkoutItems"></div>
+              </div>
+              <div class="sumCard">
+                <div class="sumTitle">Total</div>
+                <div class="sumLines">
+                  <div class="line"><span>Subtotal</span><span id="mSubtotal">$0</span></div>
+                  <div class="line"><span>Delivery</span><span id="mDelivery">$0</span></div>
+                  <div class="line total"><span>Total</span><span id="mTotal">$0</span></div>
+                </div>
+                <div class="sumNote">You’ll get a drop hint + pickup code inside <b>Orders</b>.</div>
+                <div class="sumActions">
+                  <button class="btn ghost" id="checkoutCancel" type="button">Cancel</button>
+                  <button class="btn primary" id="checkoutConfirm" type="button">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toast hidden" id="toast"></div>
+
+      <div class="decrypt hidden" id="decrypt">
+        <div class="decryptCard">
+          <div class="decryptTitle" id="decryptTitle">DECRYPTING COURIER SIGNAL…</div>
+          <div class="decryptBar"><div class="decryptFill" id="decryptFill"></div></div>
+          <div class="decryptPct" id="decryptPct">0%</div>
+          <div class="decryptSub">Hold steady. Noise is expected.</div>
+        </div>
+      </div>
+
+      <div class="burst hidden" id="burst">
+        <div class="burstCore">
+          <div class="burstTitle">SIGNAL DECRYPTED</div>
+          <div class="burstSub">Data burst received.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
