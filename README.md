@@ -39,8 +39,6 @@ When a player checks out:
 Once ready, a courier NPC spawns at a configured drop point.  
 The player must enter the generated code to receive their items.
 
-Timers are server-controlled and do not reset when reopening the UI.
-
 ---
 
 ## Dependencies
@@ -81,8 +79,6 @@ ensure ox_inventory
 ensure gs-blackmarket
 ```
 
----
-
 ## Required Item
 
 Add this to your inventory system:
@@ -96,7 +92,6 @@ Add this to your inventory system:
     stack = false,
     close = true,
 },
-```
 
 ---
 
@@ -151,14 +146,11 @@ Server owners can add or remove as many drop points as they want.
 
 ## Debug Mode
 
-Debug output is controlled via:
-
 ```
 Config.Debug = false
 ```
 
 Enable it if you need console insight.  
-Leave it off for production.
 
 ---
 
